@@ -280,6 +280,7 @@ public abstract class AbstractInfinispanServerDriver implements InfinispanServer
          try {
             MavenSettings.init();
             for (String artifact : artifacts) {
+               System.out.println("XXX Resolving: " + artifact);
                Path resolved = Artifact.fromString(artifact).resolveArtifact();
                Files.copy(resolved, libDir.toPath().resolve(resolved.getFileName()), StandardCopyOption.REPLACE_EXISTING);
             }
