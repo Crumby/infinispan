@@ -42,7 +42,7 @@ public class DistributedHitCountAccuracyTest extends MultipleCacheManagersTest {
    }
 
    static void executeSmokeTest(Cache<Integer, Game> cache) {
-      for (int i = 1; i <= 5000; i++) {
+      for (int i = 1; i <= 50000; i++) {
          cache.put(i, new Game("Game " + i, "This is the game " + i + "# of a series"));
       }
 
@@ -55,12 +55,12 @@ public class DistributedHitCountAccuracyTest extends MultipleCacheManagersTest {
 
       query = cache.query(QUERY_TEXT);
       // raise the default accuracy
-      query.hitCountAccuracy(5_000);
+      query.hitCountAccuracy(50_000);
       result = query.execute();
 
       assertThat(result.list()).hasSize(100);
       assertThat(result.count().isExact()).isTrue();
-      assertThat(result.count().value()).isEqualTo(5_000);
+      assertThat(result.count().value()).isEqualTo(50_000);
 
       // the distributed iterator is supposed to work normally
       query = cache.query(QUERY_TEXT);
@@ -70,7 +70,7 @@ public class DistributedHitCountAccuracyTest extends MultipleCacheManagersTest {
 
       query = cache.query(QUERY_TEXT);
       // raise the default accuracy
-      query.hitCountAccuracy(5_000);
+      query.hitCountAccuracy(50_000);
       try (CloseableIterator<Game> iterator = query.iterator()) {
          assertThat(iterator).toIterable().hasSize(100);
       }

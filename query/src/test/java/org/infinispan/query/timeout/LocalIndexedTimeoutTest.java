@@ -27,7 +27,7 @@ public class LocalIndexedTimeoutTest extends SingleCacheManagerTest {
 
    @BeforeMethod
    public void populate() {
-      TestHelper.populate(cache, 10000);
+      TestHelper.populate(cache, 100000);
    }
 
    @Test(expectedExceptions = SearchTimeoutException.class)
