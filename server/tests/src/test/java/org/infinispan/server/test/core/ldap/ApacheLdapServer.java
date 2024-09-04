@@ -106,7 +106,7 @@ public class ApacheLdapServer implements LdapServer {
       Arrays.stream(ldapServer.getTransports())
             .filter(Transport::isSSLEnabled)
             .map(t -> (TcpTransport) t)
-            .forEach(t -> t.setEnabledProtocols(Arrays.asList("TLSv1.3", "TLSv1.2")));
+            .forEach(t -> t.setEnabledProtocols(Arrays.asList("TLSv1.2")));
    }
 
    @Override
