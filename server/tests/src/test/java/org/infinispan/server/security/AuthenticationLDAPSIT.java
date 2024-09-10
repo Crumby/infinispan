@@ -28,6 +28,7 @@ public class AuthenticationLDAPSIT {
    public static InfinispanServerExtension SERVERS =
          InfinispanServerExtensionBuilder.config("configuration/AuthenticationLDAPSTest.xml")
                                     .addListener(new LdapServerListener())
+                                    .property("javax.net.debug", "all")
                                     .build();
 
    @ParameterizedTest

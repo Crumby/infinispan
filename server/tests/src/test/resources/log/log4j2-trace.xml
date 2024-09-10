@@ -12,10 +12,11 @@
 
   <Loggers>
     <Root level="INFO">
-      <AppenderRef ref="STDOUT" level="INFO"/>
+      <AppenderRef ref="STDOUT" level="TRACE"/>
       <AppenderRef ref="CONTAINER" level="TRACE"/>
     </Root>
 
+    <Logger name="org.wildfly.security.auth.realm.ldap.LdapSecurityRealm" level="TRACE"/>
     <Logger name="com.arjuna" level="WARN"/>
     <Logger name="org.jboss.threads" level="WARN"/>
     <Logger name="org.jgroups" level="TRACE" additivity="false">
