@@ -45,6 +45,7 @@ import org.jgroups.protocols.pbcast.NAKACK2;
 import org.jgroups.protocols.pbcast.STABLE;
 import org.jgroups.stack.Protocol;
 import org.jgroups.stack.ProtocolStack;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -103,6 +104,7 @@ public class JGroupsJdbcPing2IT {
 
    private ContainerDatabase initDatabase(String databaseType) {
       var props = properties(databaseType);
+      Assumptions.assumeTrue("CONTAINER".equals(props.get("database.mode")));
       // Ensure that a volume is created so that tables and their content survive container recreation
       props.put(ContainerDatabase.DB_PREFIX + "volume", "true");
       return new ContainerDatabase(databaseType, props);

@@ -27,7 +27,7 @@ public class HotRodTestClientDriver extends BaseTestClientDriver<HotRodTestClien
       this.testClient = testClient;
 
       ConfigurationBuilder builder = new ConfigurationBuilder();
-      builder.maxRetries(1).connectionPool().maxActive(1);
+      builder.maxRetries(1).socketTimeout(10000).connectionPool().maxActive(1);
       applyDefaultConfiguration(builder);
 
       if (OS.getCurrentOs().equals(OS.MAC_OS) || OS.getCurrentOs().equals(OS.WINDOWS)) {

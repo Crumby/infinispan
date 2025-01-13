@@ -68,6 +68,7 @@ public class ContainerDatabase extends Database {
          container.withInitScript(initSql);
 
       String logMessageWaitStrategy = properties.getProperty(TestSystemPropertyNames.INFINISPAN_TEST_CONTAINER_DATABASE_LOG_MESSAGE);
+      System.out.println("XXX LOG MESSAGE WAI STRATEGY: " + logMessageWaitStrategy);
       if (logMessageWaitStrategy != null) {
          container.waitingFor(new LogMessageWaitStrategy()
                .withRegEx(logMessageWaitStrategy)
@@ -97,7 +98,7 @@ public class ContainerDatabase extends Database {
    @Override
    public void start() {
       log.infof("Starting database %s", getType());
-      container.start();
+      container.withStartupTimeoutSeconds(600).start();
    }
 
    @Override

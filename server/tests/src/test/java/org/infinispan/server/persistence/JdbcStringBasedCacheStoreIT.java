@@ -60,6 +60,8 @@ public class JdbcStringBasedCacheStoreIT {
             cache.remove("k1");
             assertNull(table.getValueByKey("k1"));
             cache.clear();
+        } finally {
+            SERVERS.hotrod().createRemoteCacheManager().administration().removeCache(cache.getName());
         }
     }
 
@@ -84,6 +86,8 @@ public class JdbcStringBasedCacheStoreIT {
             // test purge==false, entries should remain in the database after restart
             assertNotNull(table.getValueByKey("k1"));
             assertNotNull(table.getValueByKey("k2"));
+        } finally {
+            SERVERS.hotrod().createRemoteCacheManager().administration().removeCache(cache.getName());
         }
     }
 
@@ -98,6 +102,7 @@ public class JdbcStringBasedCacheStoreIT {
                 .setLockingConfigurations();
         RemoteCache<Object, Object> cache = SERVERS.hotrod().withServerConfiguration(jdbcUtil.getConfigurationBuilder()).create();
         try(TableManipulation table = new TableManipulation(cache.getName(), jdbcUtil.getPersistenceConfiguration())) {
+            System.out.println("XXXXXXXXXXXXXXXXXXXXx: " + cache.getName());
             Double doubleKey = 10.0;
             Double doubleValue = 20.0;
             assertEquals(0, cache.size());
@@ -106,6 +111,8 @@ public class JdbcStringBasedCacheStoreIT {
             // test passivation==false, database should contain all entries which are in the cache
             assertEquals(1, table.countAllRows());
             assertEquals(doubleValue, cache.get(doubleKey));
+        } finally {
+            SERVERS.hotrod().createRemoteCacheManager().administration().removeCache(cache.getName());
         }
     }
 
@@ -119,6 +126,7 @@ public class JdbcStringBasedCacheStoreIT {
         try(TableManipulation table = new TableManipulation(cache.getName(), jdbcUtil.getPersistenceConfiguration())) {
             cache.put("k1", "v1");
             cache.put("k2", "v2");
+            System.out.println("XXXXXXXXXXXXXXXXXXXXx: " + cache.getName());
             //not yet in store (eviction.max-entries=2, LRU)
             assertNull(table.getValueByKey("k1"));
             assertNull(table.getValueByKey("k2"));
@@ -136,6 +144,8 @@ public class JdbcStringBasedCacheStoreIT {
             // test purge==false, entries should remain in the database after restart
             assertEquals(3, table.countAllRows());
             assertEquals("v1", cache.get("k1"));
+        } finally {
+            SERVERS.hotrod().createRemoteCacheManager().administration().removeCache(cache.getName());
         }
     }
 
@@ -154,6 +164,7 @@ public class JdbcStringBasedCacheStoreIT {
         try(TableManipulation table = new TableManipulation(cache.getName(), jdbcUtil.getPersistenceConfiguration())) {
             cache.put("k1", "v1");
             cache.put("k2", "v2");
+            System.out.println("XXXXXXXXXXXXXXXXXXXXx: " + cache.getName());
             assertNull(table.getValueByKey("k1"));
             assertNull(table.getValueByKey("k2"));
             cache.put("k3", "v3");
@@ -170,6 +181,8 @@ public class JdbcStringBasedCacheStoreIT {
             assertEquals(1, list.size());
             Map.Entry<String, String> entry = list.get(0);
             assertEquals(entry.getValue().substring(1), entry.getKey().substring(1));
+        } finally {
+            SERVERS.hotrod().createRemoteCacheManager().administration().removeCache(cache.getName());
         }
     }
 
@@ -191,6 +204,8 @@ public class JdbcStringBasedCacheStoreIT {
                 System.out.println(rows);
                 return rows == 0;
             });
+        } finally {
+            SERVERS.hotrod().createRemoteCacheManager().administration().removeCache(cache.getName());
         }
     }
 
