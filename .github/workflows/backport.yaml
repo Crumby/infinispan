@@ -22,7 +22,7 @@ jobs:
             echo 'backport_branches<<EOF'
             echo "$backport_branches"
             echo 'EOF'
-          } >> $GITHUB_OUTPUT
+          } >> "$GITHUB_OUTPUT"
 
   create_backports:
     needs: find_targets
