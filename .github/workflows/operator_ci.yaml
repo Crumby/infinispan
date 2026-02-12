@@ -1,4 +1,4 @@
-name: Operator Upgrade Tests
+name: Operator CI
 
 on:
   push:
@@ -56,13 +56,11 @@ jobs:
 
   tests:
     needs: image
-    uses: infinispan/infinispan-operator/.github/workflows/test_upgrades.yml@main
+    uses: Crumby/infinispan-operator/.github/workflows/ci.yml@2436
     with:
       operand: ${{ needs.image.outputs.image }}
       operandArtifact: operand-image
       operandVersion: ${{ needs.image.outputs.version }}
-      ref: main
-      repository: infinispan/infinispan-operator
+      ref: refs/heads/2436
+      repository: Crumby/infinispan-operator
       skipList: '15.1.0,15.1.1'
-      testName: TestOperandUpgrades
-      upgradeDepth: 0
